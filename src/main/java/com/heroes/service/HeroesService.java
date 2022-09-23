@@ -1,6 +1,6 @@
 package com.heroes.service;
 
-import com.heroes.dto.HeroeDTO;
+import com.heroes.dto.HeroDTO;
 import com.heroes.entity.Hero;
 
 import java.util.List;
@@ -40,7 +40,8 @@ public interface HeroesService {
      * @param updateHero hero to update in database.
      * @return the updated hero.
      */
-    Hero update(HeroeDTO updateHero);
+    Hero update(HeroDTO updateHero);
+
 
     /**
      * Delete a hero of the database;

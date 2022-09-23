@@ -1,6 +1,6 @@
 package com.heroes.service.impl;
 
-import com.heroes.dto.HeroeDTO;
+import com.heroes.dto.HeroDTO;
 import com.heroes.entity.Hero;
 import com.heroes.repository.HeroesRepository;
 import com.heroes.service.HeroesService;
@@ -52,7 +52,7 @@ public class HeroesServiceImpl implements HeroesService {
     }
 
     @Override
-    public Hero update(HeroeDTO updateHero) {
+    public Hero update(HeroDTO updateHero) {
         final var resp = this.heroesRepository.findById(updateHero.getId());
         final Hero hero = (resp.isPresent()) ? resp.get() : null;
         hero.setName(updateHero.getName());
