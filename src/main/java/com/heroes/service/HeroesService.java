@@ -42,6 +42,7 @@ public interface HeroesService {
      */
     Hero update(HeroDTO updateHero);
 
+
     /**
      * Delete a hero of the database;
      * @param id of hero to delete.
