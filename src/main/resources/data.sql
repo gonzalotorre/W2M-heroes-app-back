@@ -1,0 +1,14 @@
+INSERT INTO hero (id, name, power) VALUES (1, 'Spider-Man', 'throw webs');
+INSERT INTO hero (id, name, power) VALUES (2, 'Superman', 'Flight, superhuman strength, x-ray vision');
+INSERT INTO hero (id, name, power) VALUES (3, 'Ant-Man', 'Change body size');
+INSERT INTO hero (id, name, power) VALUES (4, 'Black Panther', 'Juices of the Heart-Shaped Herb');
+INSERT INTO hero (id, name, power) VALUES (5, 'Black Widow', 'Dangerous assassin');
+INSERT INTO hero (id, name, power) VALUES (6, 'Captain America', 'Super-Soldier');
+INSERT INTO hero (id, name, power) VALUES (7, 'Captain Marvel', 'Kree technology');
+INSERT INTO hero (id, name, power) VALUES (8, 'Cat-Woman', 'Hand-to-hand combat skills');
+INSERT INTO hero (id, name, power) VALUES (9, 'Doctor Strange', 'Magic');
+INSERT INTO hero (id, name, power) VALUES (10, 'Flash', 'Speed');
+INSERT INTO hero (id, name, power) VALUES (11, 'Iron Man', 'Iron armor');
+INSERT INTO hero (id, name, power) VALUES (12, 'Hulk', 'Super strength');
+INSERT INTO hero (id, name, power) VALUES (13, 'Thor', 'God of thunder');
+INSERT INTO hero (id, name, power) VALUES (14, 'Wonder Woman', 'Super strength');
