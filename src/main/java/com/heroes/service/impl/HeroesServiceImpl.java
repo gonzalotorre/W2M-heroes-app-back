@@ -25,7 +25,6 @@ public class HeroesServiceImpl implements HeroesService {
     private HeroesMapper heroesMapper
             = Mappers.getMapper(HeroesMapper.class);
 
-
     @Cacheable("heroes")
     @Override
     public List<HeroDTO> findAll() {
