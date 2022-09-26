@@ -11,14 +11,14 @@ public interface HeroesService {
      * Get all heroes.
      * @return a list of all heroes in database.
      */
-    List<Hero> findAll();
+    List<HeroDTO> findAll();
 
     /**
      * Get a hero by id.
      * @param id of the hero to search.
      * @return the hero with this id.
      */
-    Hero findById(long id);
+    HeroDTO findById(long id);
 
     /**
      * Get all heroes that contains a string.
@@ -26,21 +26,21 @@ public interface HeroesService {
      * @param word to search in all heroes.
      * @return a list of heroes that contains that word.
      */
-    List<Hero> findByCharacter(String word);
+    List<HeroDTO> findByCharacter(String word);
 
     /**
      * Add a hero to database.
      * @param newHero object to save in database.
      * @return the id of the hero.
      */
-    long save(Hero newHero);
+    long save(HeroDTO newHero);
 
     /**
      * Update a hero of the database.
      * @param updateHero hero to update in database.
      * @return the updated hero.
      */
-    Hero update(HeroDTO updateHero);
+    HeroDTO update(HeroDTO updateHero);
 
 
     /**
