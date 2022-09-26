@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
+import springfox.documentation.annotations.Cacheable;
 
 import java.util.List;
 import java.util.Locale;
@@ -24,7 +25,7 @@ public class HeroesServiceImpl implements HeroesService {
     private HeroesMapper heroesMapper
             = Mappers.getMapper(HeroesMapper.class);
 
-
+    @Cacheable("heroes")
     @Override
     public List<HeroDTO> findAll() {
         final var heroes = this.heroesRepository.findAll();
