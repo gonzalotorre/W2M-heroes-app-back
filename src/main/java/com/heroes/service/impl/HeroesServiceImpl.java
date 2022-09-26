@@ -1,5 +1,6 @@
 package com.heroes.service.impl;
 
+import com.heroes.annotation.ExecutionTime;
 import com.heroes.dto.HeroDTO;
 import com.heroes.entity.Hero;
 import com.heroes.mapper.HeroesMapper;
@@ -22,9 +23,10 @@ public class HeroesServiceImpl implements HeroesService {
 
     private final HeroesRepository heroesRepository;
 
-    private HeroesMapper heroesMapper
+    private final HeroesMapper heroesMapper
             = Mappers.getMapper(HeroesMapper.class);
 
+    @ExecutionTime
     @Cacheable("heroes")
     @Override
     public List<HeroDTO> findAll() {
@@ -33,6 +35,7 @@ public class HeroesServiceImpl implements HeroesService {
         return this.heroesMapper.listHeroToListDto(heroes);
     }
 
+    @ExecutionTime
     @Override
     public HeroDTO findById(long id) {
         final var resp = this.heroesRepository.findById(id);
@@ -41,6 +44,7 @@ public class HeroesServiceImpl implements HeroesService {
         return this.heroesMapper.heroToDto(hero);
     }
 
+    @ExecutionTime
     @Override
     public List<HeroDTO> findByCharacter(String word) {
         final var heroes = this.heroesRepository.findAll();
@@ -51,6 +55,7 @@ public class HeroesServiceImpl implements HeroesService {
         return this.heroesMapper.listHeroToListDto(result);
     }
 
+    @ExecutionTime
     @Override
     public long save(HeroDTO newHero) {
         final var hero = this.heroesRepository.save(this.heroesMapper.heroDtoToHero(newHero));
@@ -58,6 +63,7 @@ public class HeroesServiceImpl implements HeroesService {
         return hero.getId();
     }
 
+    @ExecutionTime
     @Override
     public HeroDTO update(HeroDTO updateHero) {
         final var resp = this.heroesRepository.findById(updateHero.getId());
@@ -68,6 +74,7 @@ public class HeroesServiceImpl implements HeroesService {
         return this.heroesMapper.heroToDto(this.heroesRepository.save(hero));
     }
 
+    @ExecutionTime
     @Override
     public void delete(long id) {
         this.heroesRepository.deleteById(id);
