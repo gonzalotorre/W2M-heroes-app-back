@@ -1,6 +1,8 @@
 package com.heroes.service;
 
+import com.heroes.dto.HeroDTO;
 import com.heroes.entity.Hero;
+import com.heroes.mapper.HeroesMapper;
 import com.heroes.repository.HeroesRepository;
 import com.heroes.service.impl.HeroesServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -23,20 +25,25 @@ public class HeroesServiceImplTest {
 
     private @Mock HeroesRepository heroesRepositoryMock;
 
+    private @Mock HeroesMapper heroesMapperMock;
+
     private @InjectMocks HeroesServiceImpl heroesServiceMock;
 
     @Test
     void findAllHeroes() {
 
         final var listHeroes = this.generateHeroesList();
+        final var listHeroesDTO = this.generateHeroesDTOList();
 
         when(this.heroesRepositoryMock.findAll()).thenReturn(listHeroes);
+        when(this.heroesMapperMock.listHeroToListDto(listHeroes)).thenReturn(listHeroesDTO);
 
         final var result = this.heroesServiceMock.findAll();
 
         assertNotNull(result);
 
         verify(this.heroesRepositoryMock).findAll();
+        verify(this.heroesMapperMock).listHeroToListDto(listHeroes);
 
     }
 
@@ -46,17 +53,20 @@ public class HeroesServiceImplTest {
         final long id = 1;
 
         final Optional<Hero> hero = Optional.of(new Hero(1, "Name 1", "Power 1"));
+        final var heroDTO = new HeroDTO(1, "Name 1", "Power 1");
 
         when(this.heroesRepositoryMock.findById(id)).thenReturn(hero);
+        when(this.heroesMapperMock.heroToDto(hero.get())).thenReturn(heroDTO);
 
         final var result = this.heroesServiceMock.findById(id);
 
         assertAll("",
                 () -> assertNotNull(result),
-                () -> assertEquals(hero.get(), result)
+                () -> assertEquals(heroDTO, result)
         );
 
         verify(this.heroesRepositoryMock).findById(id);
+        verify(this.heroesMapperMock).heroToDto(hero.get());
 
     }
 
@@ -69,29 +79,37 @@ public class HeroesServiceImplTest {
         expectedResult.add(new Hero(1, "Spider-Man", "throw webs"));
         expectedResult.add(new Hero(2, "Superman", "Flight, superhuman strength, x-ray vision"));
 
+        final var expectedResultDTO = new ArrayList<HeroDTO>();
+        expectedResultDTO.add(new HeroDTO(1, "Spider-Man", "throw webs"));
+        expectedResultDTO.add(new HeroDTO(2, "Superman", "Flight, superhuman strength, x-ray vision"));
+
         final var word = "man";
 
         when(this.heroesRepositoryMock.findAll()).thenReturn(listHeroes);
+        when(this.heroesMapperMock.listHeroToListDto(expectedResult)).thenReturn(expectedResultDTO);
 
         final var result = this.heroesServiceMock.findByCharacter(word);
 
         assertAll("",
                 () -> assertNotNull(result),
-                () -> assertEquals(expectedResult, result)
+                () -> assertEquals(expectedResultDTO, result)
         );
 
         verify(this.heroesRepositoryMock).findAll();
+        verify(this.heroesMapperMock).listHeroToListDto(expectedResult);
 
     }
 
     @Test
     void saveHero() {
 
+        final var heroDTO = new HeroDTO(1, "Name 1", "Power 1");
         final var hero = new Hero(1, "Name 1", "Power 1");
 
         when(this.heroesRepositoryMock.save(hero)).thenReturn(hero);
+        when(this.heroesMapperMock.heroDtoToHero(heroDTO)).thenReturn(hero);
 
-        final var result = this.heroesServiceMock.save(hero);
+        final var result = this.heroesServiceMock.save(heroDTO);
 
         assertAll("",
                 () -> assertNotNull(result),
@@ -99,17 +117,19 @@ public class HeroesServiceImplTest {
         );
 
         verify(this.heroesRepositoryMock).save(hero);
+        verify(this.heroesMapperMock).heroDtoToHero(heroDTO);
 
     }
 
     @Test
     void updateHero() {
 
-        /*final var hero = new Hero(1, "Name 1", "Power 1");
-        final var updateHero = new Hero(1, "Naaame 1", "Power 1");
+        final var updateHero = new HeroDTO(1, "Naaame 1", "Power 1");
+        final var hero = new Hero(1, "Name 1", "Power 1");
 
-        when(this.heroesRepositoryMock.findById(hero.getId())).thenReturn(Optional.of(hero));
-        when(this.heroesRepositoryMock.save(hero)).thenReturn(updateHero);
+        when(this.heroesRepositoryMock.findById(updateHero.getId())).thenReturn(Optional.of(hero));
+        when(this.heroesRepositoryMock.save(hero)).thenReturn(hero);
+        when(this.heroesMapperMock.heroToDto(hero)).thenReturn(updateHero);
 
         final var result = this.heroesServiceMock.update(updateHero);
 
@@ -119,7 +139,8 @@ public class HeroesServiceImplTest {
         );
 
         verify(this.heroesRepositoryMock).findById(hero.getId());
-        verify(this.heroesRepositoryMock).save(hero);*/
+        verify(this.heroesRepositoryMock).save(hero);
+        verify(this.heroesMapperMock).heroToDto(hero);
 
     }
 
@@ -142,6 +163,15 @@ public class HeroesServiceImplTest {
         list.add(new Hero(2, "Superman", "Flight, superhuman strength, x-ray vision"));
         list.add(new Hero(3, "Hulk", "Super strength"));
         list.add(new Hero(4, "Black Panther", "Juices of the Heart-Shaped Herb"));
+        return list;
+    }
+
+    private List<HeroDTO> generateHeroesDTOList() {
+        final var list = new ArrayList<HeroDTO>();
+        list.add(new HeroDTO(1, "Spider-Man", "throw webs"));
+        list.add(new HeroDTO(2, "Superman", "Flight, superhuman strength, x-ray vision"));
+        list.add(new HeroDTO(3, "Hulk", "Super strength"));
+        list.add(new HeroDTO(4, "Black Panther", "Juices of the Heart-Shaped Herb"));
         return list;
     }
 
